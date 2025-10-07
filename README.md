@@ -257,16 +257,16 @@ Issue	Description	Solution :
 - Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
 📸 (images of Jenkins pipeline execution and issues here for visual demonstration.)
-<img src="/images/Screenshot_2025-10-07_192855.png">
-(./images/Screenshot_2025-10-07_192855.png)
-(./images/Screenshot_2025-10-07_191639.png)
-(./images/Screenshot_2025-10-07_193054.png)
-(./images/Screenshot_2025-10-07_192855.png)
+<img src="/images/image1.png">
+(./images/image1.png)
+(./images/image2.png)
+(./images/image3.png)
+(./images/image4.png)
 
 ✅ Final Pipeline Execution
 
 - The final pipeline runs seamlessly with all green stages:
-(./images/Screenshot_2025-10-07_194833.png)
+(./images/image5.png)
 
 ✔ Checkout SCM →
 ✔ Compile →
