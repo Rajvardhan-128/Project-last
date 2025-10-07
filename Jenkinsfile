@@ -18,11 +18,11 @@ pipeline {
     //     }
 
     // right step 
-        stage('Checkout') {
-    steps {
-        git branch: 'main', url: 'https://github.com/Rajvardhan-128/Project-last.git'
-    }
-}
+//         stage('Checkout') {
+//     steps {
+//         git branch: 'main', url: 'https://github.com/Rajvardhan-128/Project-last.git'
+//     }
+// }
 
     
         stage ("terraform init") {
