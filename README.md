@@ -10,11 +10,16 @@ The workflow is built using Terraform, Jenkins, Nexus, SonarQube, Docker, and AW
 Repository	Purpose
 
 🔗 Jenkins-Nexus-Sonar  
-	Automates provisioning of Jenkins, Nexus, and SonarQube servers using Terraform
-🔗 Project-Last (EKS Deployment)
-	Jenkins pipeline to create AWS EKS Cluster and Kubernetes configuration
-🔗 Ekart
-	Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS for CI/CD deployment
+
+Automates provisioning of Jenkins, Nexus, and SonarQube servers using Terraform  
+
+🔗 Project-Last (EKS Deployment)  
+
+Jenkins pipeline to create AWS EKS Cluster and Kubernetes configuration  
+	
+🔗 Ekart  
+
+Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS for CI/CD deployment
 	
 ⚙️ Project Workflow
 
@@ -24,95 +29,104 @@ Repository: Jenkins-Nexus-Sonar
 
 🔧 Steps:
 
-Create AWS Network Infrastructure
+1. Create AWS Network Infrastructure
 
-Define main.tf for VPC, Internet Gateway (IGW), Subnets (2 public + 2 private), Route Tables, and Security Groups.
+		Define main.tf for VPC, Internet Gateway (IGW), Subnets (2 public + 2 private), Route Tables, and Security Groups.
 
-Associate each subnet with its route table and configure inbound rules for required ports.
+2. Associate each subnet with its route table and configure inbound rules for required ports.
 
-Provision Jenkins Server
+3. Provision Jenkins Server
 
-Define jenkins.tf for a t3.medium instance (Ubuntu) with 30GB EBS volume.
+		Define jenkins.tf for a t3.medium instance (Ubuntu) with 30GB EBS volume.
 
-Use user-data from jenkins-server.sh to install Jenkins, Java, Docker, and initial setup.
+		Use user-data from jenkins-server.sh to install Jenkins, Java, Docker, and initial setup.
 
-Provision Nexus and SonarQube Servers
+4. Provision Nexus and SonarQube Servers
 
-Repeat the same structure (nexus.tf and sonar.tf) using custom setup scripts to install and configure each service via Docker.
+		Repeat the same structure (nexus.tf and sonar.tf) using custom setup scripts to install and configure each service via Docker.
 
-IAM Role Configuration
+5. IAM Role Configuration
 
-Create IAM roles and policies for access management and EC2 permissions.
+		Create IAM roles and policies for access management and EC2 permissions.
 
-Define Variable and Output Files
+6. Define Variable and Output Files
 
-variables.tf, provider.tf, outputs.tf, and data.tf manage dynamic values and resource outputs.
+		variables.tf, provider.tf, outputs.tf, and data.tf manage dynamic values and resource outputs.
 
-Initialize and Apply Terraform
+7.Initialize and Apply Terraform
 
-terraform init
-terraform plan
-terraform apply
+	terraform init
+	terraform plan
+	terraform apply
 
 
 Ensure the key pair is available in your AWS account before applying.
 
-Post-Provision Setup
+## Post-Provision Setup :
 
-Login to each server after deployment:
+- Login to each server after deployment:
 
-Jenkins: Complete portal setup.
+9. Jenkins: Complete portal setup.
 
-Nexus: Retrieve admin password via:
+10. Nexus: Retrieve admin password via:
 
-docker ps
-docker exec -it <container_id> /bin/bash
-cd /nexus-data/
-cat admin.password
+		docker ps
+		docker exec -it <container_id> /bin/bash
+		cd /nexus-data/
+		cat admin.password
 
 
-SonarQube: Default login → admin / admin, then reset password.
+11. SonarQube:
+
+    	Default login → admin / admin, then reset password.
 
 ## Phase 2: Jenkins Configuration and Integrations
 
-🔌 Install Required Plugins
-Plugin	Purpose
-SonarQube Scanner	Code quality analysis
-Nexus Artifact Uploader	Upload artifacts to Nexus
-Docker, Docker Pipeline	Image build and push
-OWASP Dependency-Check	Vulnerability scanning
-Eclipse Temurin Installer	Install JDK
-Pipeline Maven Integration	CI/CD build stages
+🔌 Install Required Plugins  
+
+| Plugin                     | Purpose                        |
+|----------------------------|--------------------------------|
+| SonarQube Scanner           | Code quality analysis          |
+| Nexus Artifact Uploader     | Upload artifacts to Nexus      |
+| Docker, Docker Pipeline     | Image build and push           |
+| OWASP Dependency-Check      | Vulnerability scanning         |
+| Eclipse Temurin Installer   | Install JDK                    |
+| Pipeline Maven Integration  | CI/CD build stages             |
+
 ⚙️ Configure Tools
 
-JDK:
-Jenkins → Manage Jenkins → Tools
+1. JDK:
+   
+		Jenkins → Manage Jenkins → Tools
 
-Add JDK → Install from adoptium.net → Version jdk-17.0.9+9
+		Add JDK → Install from adoptium.net → Version jdk-17.0.9+9
 
-Sonar Scanner:
+2. Sonar Scanner:
 
-Default version, automatic install.
+		Default version, automatic install.
 
-Maven:
+3. Maven:
 
-Name: maven3, Version: 3.6.3, Path: /usr/share/maven
+		Name: maven3, Version: 3.6.3, Path: /usr/share/maven
 
-Dependency Check:
+4. Dependency Check:
 
-Name: DC, Version: 6.5.1
+		Name: DC, Version: 6.5.1
 
-Docker:
+5. Docker:
 
-Latest version (from Docker.io)
+		Latest version (from Docker.io)
 
 ## Phase 3: Credentials & Integrations
 
-🔑 Credentials Setup
-Tool	Type	ID	Description
-SonarQube Token	Secret Text	sonar-quabe	Generated via Sonar → Security → Users
-Docker Hub Password	Secret Text	dockerhub-pwd	Docker Hub credentials
-NVD API Key	Secret Text	nvd-api-key	Used in OWASP Dependency-Check
+🔑 Credentials Setup  
+
+| Tool                | Type        | ID            | Description                                 |
+|--------------------|------------|---------------|---------------------------------------------|
+| SonarQube Token     | Secret Text | sonar-quabe   | Generated via Sonar → Security → Users     |
+| Docker Hub Password | Secret Text | dockerhub-pwd | Docker Hub credentials                      |
+| NVD API Key         | Secret Text | nvd-api-key   | Used in OWASP Dependency-Check             |
+
 🔗 Tool Integrations
 
 SonarQube Integration
@@ -145,25 +159,25 @@ Repository: Project-last
 
 🧩 Steps:
 
-Create a Jenkins pipeline named “EKS-Cluster-Deployment”.
+1.Create a Jenkins pipeline named “EKS-Cluster-Deployment”.
 
 Configure SCM:
 
-Repository: https://github.com/Rajvardhan-128/Project-last.git
+	Repository: https://github.com/Rajvardhan-128/Project-last.git
 
-Branch: main
+	Branch: main
 
-Run the pipeline to automatically:
+2. Run the pipeline to automatically:
 
-Provision AWS EKS cluster using Terraform.
+3. Provision AWS EKS cluster using Terraform.
 
-Create 2 worker nodes.
+- Create 2 worker nodes.
 
-Configure kubectl access to Jenkins.
+- Configure kubectl access to Jenkins.
 
 ## Phase 5: Ekart Application CI/CD Deployment
 
-Repository: Ekart
+- Repository: Ekart
 
 🧱 Steps:
 
@@ -201,16 +215,15 @@ Issue	Description	Solution :
 - Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
 📸 (images of Jenkins pipeline execution and issues here for visual demonstration.)
-![Alt text](./images/Screenshot 2025-10-07 192855.png)
-![Alt text](./images/Screenshot 2025-10-07 191639.png)
-![Alt text](./images/Screenshot 2025-10-07 193054.png)
-![Alt text](./images/Screenshot 2025-10-07 192855.png)
+(./images/Screenshot_2025-10-07_192855.png)
+(./images/Screenshot_2025-10-07_191639.png)
+(./images/Screenshot_2025-10-07_193054.png)
+(./images/Screenshot_2025-10-07_192855.png)
 
-)
 ✅ Final Pipeline Execution
 
 The final pipeline runs seamlessly with all green stages:
-![Alt text](./images/Screenshot 2025-10-07 194833.png
+(./images/Screenshot_2025-10-07_194833.png)
 
 ✔ Checkout SCM →
 ✔ Compile →
