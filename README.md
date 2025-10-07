@@ -27,7 +27,7 @@ Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS 
 
 Repository: Jenkins-Nexus-Sonar
 
-## 🔧 Steps:
+🔧 Steps:
 
 1. Create AWS Network Infrastructure.
 
@@ -93,7 +93,7 @@ Repository: Jenkins-Nexus-Sonar
 | Eclipse Temurin Installer   | Install JDK                    |
 | Pipeline Maven Integration  | CI/CD build stages             |
 
-## ⚙️ Configure Tools :
+⚙️ Configure Tools :
 
 1. JDK:
    
@@ -127,7 +127,7 @@ Repository: Jenkins-Nexus-Sonar
 | Docker Hub Password | Secret Text | dockerhub-pwd | Docker Hub credentials                      |
 | NVD API Key         | Secret Text | nvd-api-key   | Used in OWASP Dependency-Check             |
 
-@@ 🔗 Tool Integrations :
+ 🔗 Tool Integrations :
 
 1. SonarQube Integration - 
    
@@ -236,7 +236,7 @@ Repository: Jenkins-Nexus-Sonar
 
 🧠 Issues Faced & Solutions
  
-@@ Issue	Description	Solution : 
+ Issue	Description	Solution : 
 
 - NVD API Key Error	OWASP Dependency Check failed due to missing API key.	Added nvd-api-key as secret text in Jenkins credentials.
 - Compile-Time Error	Maven build failed due to version mismatch.	Fixed by updating JDK and Maven versions in Jenkins tool config.
@@ -258,14 +258,7 @@ Repository: Jenkins-Nexus-Sonar
   
 <img src="/images/image4.png">
 
-✔ Checkout SCM →
-✔ Compile →
-✔ OWASP Dependency Check →
-✔ SonarQube Analysis →
-✔ Build →
-✔ Deploy to Nexus →
-✔ Build and Push Docker Image →
-✔ Deploy to Kubernetes (EKS)
+
 
 ## 🧩 Tools Used :
 
