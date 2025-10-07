@@ -1,4 +1,4 @@
-🚀 Jenkins–Nexus–SonarQube–Terraform–EKS End-to-End DevOps Automation
+## 🚀 Jenkins–Nexus–SonarQube–Terraform–EKS End-to-End DevOps Automation
 📘 Overview
 
 This project demonstrates a complete DevOps pipeline that automates infrastructure provisioning, CI/CD setup, security scanning, artifact management, containerization, and deployment onto an AWS EKS cluster.
@@ -6,15 +6,19 @@ This project demonstrates a complete DevOps pipeline that automates infrastructu
 The workflow is built using Terraform, Jenkins, Nexus, SonarQube, Docker, and AWS EKS — with integrations configured through real pipelines and credentials.
 
 🧩 Repositories Involved
+
 Repository	Purpose
-🔗 Jenkins-Nexus-Sonar
+
+🔗 Jenkins-Nexus-Sonar  
 	Automates provisioning of Jenkins, Nexus, and SonarQube servers using Terraform
 🔗 Project-Last (EKS Deployment)
 	Jenkins pipeline to create AWS EKS Cluster and Kubernetes configuration
 🔗 Ekart
 	Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS for CI/CD deployment
+	
 ⚙️ Project Workflow
-Phase 1: Infrastructure Provisioning using Terraform
+
+## Phase 1: Infrastructure Provisioning using Terraform
 
 Repository: Jenkins-Nexus-Sonar
 
@@ -69,7 +73,8 @@ cat admin.password
 
 SonarQube: Default login → admin / admin, then reset password.
 
-Phase 2: Jenkins Configuration and Integrations
+## Phase 2: Jenkins Configuration and Integrations
+
 🔌 Install Required Plugins
 Plugin	Purpose
 SonarQube Scanner	Code quality analysis
@@ -101,7 +106,8 @@ Docker:
 
 Latest version (from Docker.io)
 
-Phase 3: Credentials & Integrations
+## Phase 3: Credentials & Integrations
+
 🔑 Credentials Setup
 Tool	Type	ID	Description
 SonarQube Token	Secret Text	sonar-quabe	Generated via Sonar → Security → Users
@@ -133,7 +139,7 @@ Add following lines:
     <password>Vishv@1282</password>
 </server>
 
-Phase 4: EKS Cluster Deployment Pipeline
+## Phase 4: EKS Cluster Deployment Pipeline
 
 Repository: Project-last
 
@@ -155,60 +161,56 @@ Create 2 worker nodes.
 
 Configure kubectl access to Jenkins.
 
-Phase 5: Ekart Application CI/CD Deployment
+## Phase 5: Ekart Application CI/CD Deployment
 
 Repository: Ekart
 
 🧱 Steps:
 
-Create Jenkins pipeline: “Deployment”
+1. Create Jenkins pipeline: “Deployment”
 
-SCM → Git → https://github.com/Rajvardhan-128/Ekart.git
+  		SCM → Git → https://github.com/Rajvardhan-128/Ekart.git
 
-Branch: main
+        Branch: main
 
-The pipeline stages include:
+2. The pipeline stages include:
 
-Checkout SCM
+1. Checkout SCM
+2. Tool Install
+3. Git Checkout
+4. OWASP Dependency Check
+5. Compile
+6. Unit Test
+7. SonarQube Analysis
+8. Build
+9. Deploy to Nexus
+10. Build and Tag Docker Image
+11. Push Image to DockerHub
+12. Deploy to EKS via kubectl
+13. Ensure the settings.xml file is configured inside:  
 
-Tool Install
+        /var/lib/jenkins/.m2/settings.xml
 
-Git Checkout
-
-OWASP Dependency Check
-
-Compile
-
-Unit Test
-
-SonarQube Analysis
-
-Build
-
-Deploy to Nexus
-
-Build and Tag Docker Image
-
-Push Image to DockerHub
-
-Deploy to EKS via kubectl
-
-Ensure the settings.xml file is configured inside:
-
-/var/lib/jenkins/.m2/settings.xml
 
 🧠 Issues Faced & Solutions
-Issue	Description	Solution
-NVD API Key Error	OWASP Dependency Check failed due to missing API key.	Added nvd-api-key as secret text in Jenkins credentials.
-Compile-Time Error	Maven build failed due to version mismatch.	Fixed by updating JDK and Maven versions in Jenkins tool config.
-SonarQube Connection Failure	Jenkins could not connect to Sonar server.	Added correct server URL and token in SonarQube plugin configuration.
-Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
-📸 (Add screenshots of Jenkins pipeline execution and issues here for visual demonstration.)
+Issue	Description	Solution : 
+- NVD API Key Error	OWASP Dependency Check failed due to missing API key.	Added nvd-api-key as secret text in Jenkins credentials.
+- Compile-Time Error	Maven build failed due to version mismatch.	Fixed by updating JDK and Maven versions in Jenkins tool config.
+- SonarQube Connection Failure	Jenkins could not connect to Sonar server.	Added correct server URL and token in SonarQube plugin configuration.
+- Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
+📸 (images of Jenkins pipeline execution and issues here for visual demonstration.)
+![Alt text](./images/Screenshot 2025-10-07 192855.png)
+![Alt text](./images/Screenshot 2025-10-07 191639.png)
+![Alt text](./images/Screenshot 2025-10-07 193054.png)
+![Alt text](./images/Screenshot 2025-10-07 192855.png)
+
+)
 ✅ Final Pipeline Execution
 
 The final pipeline runs seamlessly with all green stages:
+![Alt text](./images/Screenshot 2025-10-07 194833.png
 
 ✔ Checkout SCM →
 ✔ Compile →
