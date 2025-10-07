@@ -9,13 +9,21 @@ pipeline {
         )
     }
 // update the GIT repo URL first 
+// wrong step defined 
+    // stages {
+    //     stage('Checkout') {
+    //         steps {
+    //             git 'https://github.com/Rajvardhan-128/Project-last.git'
+    //         }
+    //     }
 
-    stages {
+    // right step 
         stage('Checkout') {
-            steps {
-                git 'https://github.com/Rajvardhan-128/Project-last.git'
-            }
-        }
+    steps {
+        git branch: 'main', url: 'https://github.com/Rajvardhan-128/Project-last.git'
+    }
+}
+
     
         stage ("terraform init") {
             steps {
