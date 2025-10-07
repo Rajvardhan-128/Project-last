@@ -8,6 +8,7 @@ pipeline {
             description: 'Select the action to perform'
         )
     }
+// update the GIT repo URL first 
 
     stages {
         stage('Checkout') {
