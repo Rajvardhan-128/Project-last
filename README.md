@@ -7,7 +7,7 @@ The workflow is built using Terraform, Jenkins, Nexus, SonarQube, Docker, and AW
 
 🧩 Repositories Involved - 
 
-Repository	Purpose
+- Repository	Purpose
 
 🔗 Jenkins-Nexus-Sonar  :
 
@@ -23,11 +23,11 @@ Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS 
 	
 ## ⚙️ Project Workflow - 
 
-## Phase 1: Infrastructure Provisioning using Terraform
+## Phase 1: Infrastructure Provisioning using Terraform :
 
 Repository: Jenkins-Nexus-Sonar
 
-🔧 Steps:
+## 🔧 Steps:
 
 1. Create AWS Network Infrastructure.
 
@@ -93,7 +93,7 @@ Repository: Jenkins-Nexus-Sonar
 | Eclipse Temurin Installer   | Install JDK                    |
 | Pipeline Maven Integration  | CI/CD build stages             |
 
-⚙️ Configure Tools
+## ⚙️ Configure Tools :
 
 1. JDK:
    
@@ -127,7 +127,7 @@ Repository: Jenkins-Nexus-Sonar
 | Docker Hub Password | Secret Text | dockerhub-pwd | Docker Hub credentials                      |
 | NVD API Key         | Secret Text | nvd-api-key   | Used in OWASP Dependency-Check             |
 
-🔗 Tool Integrations
+@@ 🔗 Tool Integrations :
 
 1. SonarQube Integration - 
    
@@ -156,7 +156,7 @@ Repository: Jenkins-Nexus-Sonar
 		    <password>Vishv@1282</password>
 		</server>
 
-## Phase 4: EKS Cluster Deployment Pipeline
+## Phase 4: EKS Cluster Deployment Pipeline :
 
 - Repository: Project-last
 
@@ -178,37 +178,23 @@ Repository: Jenkins-Nexus-Sonar
 
 - Configure kubectl access to Jenkins.
 
-## Phase 5: Ekart Application CI/CD Deployment
+## Phase 5: Ekart Application CI/CD Deployment :
 
 - Repository: Ekart
 
 🧱 Steps:
 
-1. Create Jenkins pipeline: “Deployment”
+1. Create Jenkins pipeline: “Deployment” - 
 
   		SCM → Git → https://github.com/Rajvardhan-128/Ekart.git
 
         Branch: main
 
-2. The pipeline stages include:
-
-1. Checkout SCM
-2. Tool Install
-3. Git Checkout
-4. OWASP Dependency Check
-5. Compile
-6. Unit Test
-7. SonarQube Analysis
-8. Build
-9. Deploy to Nexus
-10. Build and Tag Docker Image
-11. Push Image to DockerHub
-12. Deploy to EKS via kubectl
-13. Ensure the settings.xml file is configured inside:  
+2. Ensure the settings.xml file is configured inside jenkins server:  
 
         /var/lib/jenkins/.m2/settings.xml
 
-- code inside that file is below :
+- Code inside that file is below :
 
 		 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
 	          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -245,28 +231,32 @@ Repository: Jenkins-Nexus-Sonar
 	    <activeProfile>default</activeProfile>
 	  </activeProfiles>
 	
-	</settings>
+		</settings>
 
 
 🧠 Issues Faced & Solutions
+ 
+@@ Issue	Description	Solution : 
 
-Issue	Description	Solution : 
 - NVD API Key Error	OWASP Dependency Check failed due to missing API key.	Added nvd-api-key as secret text in Jenkins credentials.
 - Compile-Time Error	Maven build failed due to version mismatch.	Fixed by updating JDK and Maven versions in Jenkins tool config.
 - SonarQube Connection Failure	Jenkins could not connect to Sonar server.	Added correct server URL and token in SonarQube plugin configuration.
 - Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
-📸 (images of Jenkins pipeline execution and issues here for visual demonstration.)
-<img src="/images/image1.png">
-(./images/image1.png)
-(./images/image2.png)
-(./images/image3.png)
-(./images/image4.png)
+## 📸images of Jenkins pipeline execution and issues here for visual demonstration.
 
-✅ Final Pipeline Execution
+<img src="/images/image1.png">
+
+<img src="/images/image2.png">
+
+<img src="/images/image3.png">
+
+
+## ✅ Final Pipeline Execution :
 
 - The final pipeline runs seamlessly with all green stages:
-(./images/image5.png)
+  
+<img src="/images/image4.png">
 
 ✔ Checkout SCM →
 ✔ Compile →
@@ -277,6 +267,6 @@ Issue	Description	Solution :
 ✔ Build and Push Docker Image →
 ✔ Deploy to Kubernetes (EKS)
 
-🧩 Tools Used
+## 🧩 Tools Used :
 
 Terraform, Jenkins, Nexus, SonarQube, Docker, AWS EKS, Maven, OWASP Dependency-Check, Kubernetes, GitHub
