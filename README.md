@@ -5,23 +5,23 @@ This project demonstrates a complete DevOps pipeline that automates infrastructu
 
 The workflow is built using Terraform, Jenkins, Nexus, SonarQube, Docker, and AWS EKS — with integrations configured through real pipelines and credentials.
 
-🧩 Repositories Involved
+🧩 Repositories Involved - 
 
 Repository	Purpose
 
-🔗 Jenkins-Nexus-Sonar  
+🔗 Jenkins-Nexus-Sonar  :
 
 Automates provisioning of Jenkins, Nexus, and SonarQube servers using Terraform  
 
-🔗 Project-Last (EKS Deployment)  
+🔗 Project-Last (EKS Deployment)  :
 
 Jenkins pipeline to create AWS EKS Cluster and Kubernetes configuration  
 	
-🔗 Ekart  
+🔗 Ekart  :
 
 Java-based application integrated with Maven, Nexus, SonarQube, Docker, and EKS for CI/CD deployment
 	
-⚙️ Project Workflow
+## ⚙️ Project Workflow - 
 
 ## Phase 1: Infrastructure Provisioning using Terraform
 
@@ -29,29 +29,29 @@ Repository: Jenkins-Nexus-Sonar
 
 🔧 Steps:
 
-1. Create AWS Network Infrastructure
+1. Create AWS Network Infrastructure.
 
 		Define main.tf for VPC, Internet Gateway (IGW), Subnets (2 public + 2 private), Route Tables, and Security Groups.
 
 2. Associate each subnet with its route table and configure inbound rules for required ports.
 
-3. Provision Jenkins Server
+3. Provision Jenkins Server.
 
-		Define jenkins.tf for a t3.medium instance (Ubuntu) with 30GB EBS volume.
+	- Define jenkins.tf for a t3.medium instance (Ubuntu) with 30GB EBS volume.
 
-		Use user-data from jenkins-server.sh to install Jenkins, Java, Docker, and initial setup.
+	- Use user-data from jenkins-server.sh to install Jenkins, Java, Docker, and initial setup.
 
 4. Provision Nexus and SonarQube Servers
 
-		Repeat the same structure (nexus.tf and sonar.tf) using custom setup scripts to install and configure each service via Docker.
+	- Repeat the same structure (nexus.tf and sonar.tf) using custom setup scripts to install and configure each service via Docker.
 
 5. IAM Role Configuration
 
-		Create IAM roles and policies for access management and EC2 permissions.
+	- Create IAM roles and policies for access management and EC2 permissions.
 
 6. Define Variable and Output Files
 
-		variables.tf, provider.tf, outputs.tf, and data.tf manage dynamic values and resource outputs.
+	- variables.tf, provider.tf, outputs.tf, and data.tf manage dynamic values and resource outputs.
 
 7.Initialize and Apply Terraform
 
@@ -60,7 +60,7 @@ Repository: Jenkins-Nexus-Sonar
 	terraform apply
 
 
-Ensure the key pair is available in your AWS account before applying.
+- Ensure the key pair is available in your AWS account before applying.
 
 ## Post-Provision Setup :
 
@@ -78,7 +78,7 @@ Ensure the key pair is available in your AWS account before applying.
 
 11. SonarQube:
 
-    	Default login → admin / admin, then reset password.
+    - Default login → admin / admin, then reset password.
 
 ## Phase 2: Jenkins Configuration and Integrations
 
@@ -97,25 +97,25 @@ Ensure the key pair is available in your AWS account before applying.
 
 1. JDK:
    
-		Jenkins → Manage Jenkins → Tools
+	- Jenkins → Manage Jenkins → Tools
 
-		Add JDK → Install from adoptium.net → Version jdk-17.0.9+9
+	- Add JDK → Install from adoptium.net → Version jdk-17.0.9+9
 
 2. Sonar Scanner:
 
-		Default version, automatic install.
+	- Default version, automatic install.
 
 3. Maven:
 
-		Name: maven3, Version: 3.6.3, Path: /usr/share/maven
+	- Name: maven3, Version: 3.6.3, Path: /usr/share/maven
 
 4. Dependency Check:
 
-		Name: DC, Version: 6.5.1
+ - Name: DC, Version: 6.5.1
 
 5. Docker:
 
-		Latest version (from Docker.io)
+- Latest version (from Docker.io)
 
 ## Phase 3: Credentials & Integrations
 
@@ -129,43 +129,46 @@ Ensure the key pair is available in your AWS account before applying.
 
 🔗 Tool Integrations
 
-SonarQube Integration
-Jenkins → Manage Jenkins → System → SonarQube Installations
+1. SonarQube Integration
+   
+- Jenkins → Manage Jenkins → System → SonarQube Installations
 
-Name: sonar-token
+		Name: sonar-token
 
-Server URL: SonarQube URL
+		Server URL: SonarQube URL
 
-Token: sonar-quabe
+		Token: sonar-quabe
 
-Nexus Integration
-Jenkins → Manage Jenkins → Managed Files → Add new config (global-maven)
-Add following lines:
+2. Nexus Integration
+   
+- Jenkins → Manage Jenkins → Managed Files → Add new config (global-maven)
 
-<server>
-    <id>maven-releases</id>
-    <username>admin</username>
-    <password>Vishv@1282</password>
-</server>
-<server>
-    <id>maven-snapshots</id>
-    <username>admin</username>
-    <password>Vishv@1282</password>
-</server>
+- Add following lines:
+
+		<server>
+		    <id>maven-releases</id>
+		    <username>admin</username>
+		    <password>Vishv@1282</password>
+		</server>
+		<server>
+		    <id>maven-snapshots</id>
+		    <username>admin</username>
+		    <password>Vishv@1282</password>
+		</server>
 
 ## Phase 4: EKS Cluster Deployment Pipeline
 
-Repository: Project-last
+- Repository: Project-last
 
 🧩 Steps:
 
 1.Create a Jenkins pipeline named “EKS-Cluster-Deployment”.
 
-Configure SCM:
+- Configure SCM:
 
-	Repository: https://github.com/Rajvardhan-128/Project-last.git
-
-	Branch: main
+		Repository: https://github.com/Rajvardhan-128/Project-last.git
+	
+		Branch: main
 
 2. Run the pipeline to automatically:
 
@@ -205,6 +208,45 @@ Configure SCM:
 
         /var/lib/jenkins/.m2/settings.xml
 
+- code inside that file is below :
+
+		 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+	                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+	
+	  <!-- Maven local repository location -->
+	  <localRepository>/var/lib/jenkins/.m2/repository</localRepository>
+	
+	  <!-- Default global mirrors -->
+	  <mirrors>
+	    <mirror>
+	      <id>central</id>
+	      <mirrorOf>central</mirrorOf>
+	      <url>https://repo.maven.apache.org/maven2</url>
+	    </mirror>
+	  </mirrors>
+	
+	  <!-- Default profiles -->
+	  <profiles>
+	    <profile>
+	      <id>default</id>
+	      <repositories>
+	        <repository>
+	          <id>central</id>
+	          <url>https://repo.maven.apache.org/maven2</url>
+	        </repository>
+	      </repositories>
+	    </profile>
+	  </profiles>
+	
+	  <!-- Activate the default profile -->
+	  <activeProfiles>
+	    <activeProfile>default</activeProfile>
+	  </activeProfiles>
+	
+	</settings>
+
 
 🧠 Issues Faced & Solutions
 
@@ -215,6 +257,7 @@ Issue	Description	Solution :
 - Docker Permission Denied	Jenkins user lacked Docker access.	Added jenkins user to docker group and restarted the service.
 
 📸 (images of Jenkins pipeline execution and issues here for visual demonstration.)
+<img src="Screenshot_2025-10-07_192855.png">
 (./images/Screenshot_2025-10-07_192855.png)
 (./images/Screenshot_2025-10-07_191639.png)
 (./images/Screenshot_2025-10-07_193054.png)
