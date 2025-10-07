@@ -8,23 +8,8 @@ pipeline {
             description: 'Select the action to perform'
         )
     }
-// update the GIT repo URL first 
-// wrong step defined 
-    // stages {
-    //     stage('Checkout') {
-    //         steps {
-    //             git 'https://github.com/Rajvardhan-128/Project-last.git'
-    //         }
-    //     }
 
-    // right step 
-//         stage('Checkout') {
-//     steps {
-//         git branch: 'main', url: 'https://github.com/Rajvardhan-128/Project-last.git'
-//     }
-// }
-
-    
+    stages {
         stage ("terraform init") {
             steps {
                 sh ("terraform init -reconfigure") 
@@ -37,7 +22,7 @@ pipeline {
             }
         }
 
-        stage (" Action") {
+        stage ("Action") {
             steps {
                 script {
                     switch (params.ACTION) {
@@ -57,3 +42,67 @@ pipeline {
         }
     }
 }
+
+
+
+
+
+// pipeline {
+//     agent any
+
+//     parameters {
+//         choice(
+//             name: 'ACTION',
+//             choices: ['apply', 'destroy'],
+//             description: 'Select the action to perform'
+//         )
+//     }
+// // update the GIT repo URL first 
+// // wrong step defined 
+//     // stages {
+//     //     stage('Checkout') {
+//     //         steps {
+//     //             git 'https://github.com/Rajvardhan-128/Project-last.git'
+//     //         }
+//     //     }
+
+//     // right step 
+// //         stage('Checkout') {
+// //     steps {
+// //         git branch: 'main', url: 'https://github.com/Rajvardhan-128/Project-last.git'
+// //     }
+// // }
+
+    
+//         stage ("terraform init") {
+//             steps {
+//                 sh ("terraform init -reconfigure") 
+//             }
+//         }
+        
+//         stage ("plan") {
+//             steps {
+//                 sh ('terraform plan') 
+//             }
+//         }
+
+//         stage (" Action") {
+//             steps {
+//                 script {
+//                     switch (params.ACTION) {
+//                         case 'apply':
+//                             echo 'Executing Apply...'
+//                             sh "terraform apply --auto-approve"
+//                             break
+//                         case 'destroy':
+//                             echo 'Executing Destroy...'
+//                             sh "terraform destroy --auto-approve"
+//                             break
+//                         default:
+//                             error 'Unknown action'
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
